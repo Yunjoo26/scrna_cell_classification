@@ -1,2 +1,18 @@
-# scrna_cell_classification
-Mouse pancreas scRNA-seq normalization and cell type classification
+생쥐 이자(Pancreas) 단일세포 RNA-seq 세포 유형 분류 프로젝트
+
+## 1. 프로젝트 개요
+- **생물학적 질문:** 시퀀싱 깊이(총 발현량)가 서로 다른 세포들의 원시 발현량(Raw Read Count)을 정규화(Normalization)하면, 단순 개수 비교와 다른 세포 유형 판정 결과가 나올까?
+- **분석 대상:** 생쥐(*Mus musculus*) 이자(Pancreas) 조직 단일세포 데이터 (`NCBI GEO: GSE84133` 기반)
+- **사용 유전자(4종):**
+  - `Actb`: 하우스키핑 유전자 (품질 관리 QC 기준)
+  - `Ins1`: 베타세포(Beta cell) 마커
+  - `Gcg`: 알파세포(Alpha cell) 마커
+  - `Amy2a`: 선방세포(Acinar cell) 마커
+
+## 2. 주요 구현 기능
+1. **데이터 전처리(QC & Normalization):** 총 발현량이 0인 저품질 세포 필터링 및 세포별 정규화 비율(%) 계산
+2. **세포 유형 자동 분류:** 정규화 비율이 가장 높은 마커 유전자를 기준으로 세포 유형 판별
+3. **자동 검증 테스트(`assert`):** 손 계산 정답값 및 예외 케이스(0 입력 등) 자동 검산
+
+## 3. 한계점 및 추후 보완 방향
+- 현재 단순 최댓값(`max`) 기준 판별 방식을 사용하므로, 추후 최소 발현 비율 임계값(Threshold) 조건을 추가하여 모호한 세포를 분리할 예정입니다.
